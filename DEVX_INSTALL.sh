@@ -25,7 +25,7 @@ echo "DEVX Dir : $DEVX_DIR"
 echo "RT Dir : $XSA_RT_DIR"
 echo "CONT Dir : $XSA_CONT_DIR"
 
-echo "Preparing for DEVX installation *****************************************************"
+echo "Preparing for DEVX installation *****************************************************" 
 
 #### LOGIN TO XSA
     echo; \
