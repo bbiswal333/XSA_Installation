@@ -88,4 +88,4 @@ if ! $HANA_DATABASE_DIR/hdblcm \
 ### switching user
 echo "switching to user $xsadm_user"
 
-su - $xsadm_user -c $ROOT_DIR/DEVX_INSTALL.sh
+su - $xsadm_user -c $ROOT_DIR/DEVX_INSTALL.sh 
