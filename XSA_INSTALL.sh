@@ -32,6 +32,7 @@ sapadm_password="Toor1234"
 xs_master_password="Toor1234"
 
 sapadm_user="J20"
+xsadm_user="j20adm"
 org_manager_user="xsorgmanager"
 org_name="XS"
 hostnameFQN="mo-a58d1f0f1.mo.sap.corp"
@@ -59,10 +60,11 @@ exit 1;fi; \
 
 echo "HANA server Extarcting Completed.."
 
-#### HANA XSA INSTALLATION
+#### HANA XSA RT INSTALLATION
 
 echo "HANA XSA Installation started..  ****************************************************"
 chmod 7777 $HANA_DATABASE_DIR; \
+mkdir -p $saphome/{shared,data,log}; \
 if ! $HANA_DATABASE_DIR/hdblcm \
 	--action=install \
 	--system_usage=custom \
@@ -81,4 +83,9 @@ if ! $HANA_DATABASE_DIR/hdblcm \
 	--org_manager_password=$org_manager_password \
 	--hostname=$hostnameFQN -b; then exit 1;fi
 	
-	echo "HANA XSA Installation SUCCESS !!!    ***************************************************"
+	echo "HANA XSA RT Installation SUCCESS !!!    ***************************************************"
+	
+### switching user
+echo "switching to user $xsadm_user"
+
+su - $xsadm_user -c $ROOT_DIR/DEVX_INSTALL.sh
