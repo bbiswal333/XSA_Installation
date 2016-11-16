@@ -43,7 +43,7 @@ hostnameFQN="mo-a58d1f0f1.mo.sap.corp"
 
 sapcar=$(ls $ROOT_DIR/*.EXE); \
 if [ ! "${sapcar}" ]; then exit 1; fi; \
-chmod 7777 $sapcar; \
+#chmod 7777 $sapcar; \
 echo $sapcar;
 
 echo "XSA RT Extarcting started.. ****************************************"
@@ -63,7 +63,7 @@ echo "HANA server Extarcting Completed.."
 #### HANA XSA RT INSTALLATION
 
 echo "HANA XSA Installation started..  ****************************************************"
-chmod 7777 $HANA_DATABASE_DIR; \
+#chmod 7777 $HANA_DATABASE_DIR; \
 mkdir -p $saphome/{shared,data,log}; \
 if ! $HANA_DATABASE_DIR/hdblcm \
 	--action=install \
@@ -71,7 +71,7 @@ if ! $HANA_DATABASE_DIR/hdblcm \
 	--add_local_roles=xs_worker \
 	--import_xs_content=yes \
 	--remote_execution=ssh \
-    --install_hostagent=off \
+        --install_hostagent=off \
 	--sapmnt=$saphome/shared --datapath=$saphome/data --logpath=$saphome/log \
 	--component_dirs=$XSA_RT_DIR/,$XSA_CONT_DIR/ \
 	--components=all -p $password\
@@ -88,4 +88,4 @@ if ! $HANA_DATABASE_DIR/hdblcm \
 ### switching user
 echo "switching to user $xsadm_user"
 
-su - $xsadm_user -c $ROOT_DIR/DEVX_INSTALL.sh 
+su - $xsadm_user -c $ROOT_DIR/DEVX_INSTALL.sh
