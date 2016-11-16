@@ -25,7 +25,7 @@ echo "DEVX Dir : $DEVX_DIR"
 echo "RT Dir : $XSA_RT_DIR"
 echo "CONT Dir : $XSA_CONT_DIR"
 
-echo "Preparing for DEVX installation *****************************************************" 
+echo "Preparing for DEVX installation *****************************************************"
 
 #### LOGIN TO XSA
     echo; \
@@ -35,11 +35,11 @@ echo "Preparing for DEVX installation ******************************************
 echo "Installing XSA Controller"
 
 	echo "XS Services Installation starts ...  ********************"
-	if ! xs install $XSA_CONT_DIR/XSAC_SERVICES-*.zip -o ALLOW_SC_SAME_VERSION; then exit 1; fi;\
+	if ! xs install $XSA_CONT_DIR/jobscheduler-assembly-*.zip -o ALLOW_SC_SAME_VERSION; then exit 1; fi;\
 	echo "XS Services Installation completed ...  ********************"
 	
 	echo "XS Admin Installation starts ...  ********************"
-	if ! xs install $XSA_CONT_DIR/sap-xsac-admin-*.zip -o ALLOW_SC_SAME_VERSION; then exit 1; fi;\
+	if ! xs install $XSA_CONT_DIR/sap-xsac-admin-*-XSACMONITORING*.zip -o ALLOW_SC_SAME_VERSION; then exit 1; fi;\
 	echo "XS Admin Installation completed ...  ********************"
 
 echo "Installing XSA Controller completed successfully"
@@ -51,15 +51,15 @@ echo "Installing DEVX Components"
 	if ! xs install $DEVX_DIR/sap-xsac-hrtt-*.zip -o ALLOW_SC_SAME_VERSION; then exit 1; fi;\
 	echo "HRTT Installation completed ...  ********************"
 	
-	echo "DI Installation starts ...  ********************"
-	if ! xs install $DEVX_DIR/sap-xsac-di-*.zip -e $DEVX_DIR/sap-xsac-di-*.mtaext -o \
-	ALLOW_SC_SAME_VERSION; then exit 1; fi;\
-	echo "DI Installation completed ...  ********************"
+	#echo "DI Installation starts ...  ********************"
+	#if ! xs install $DEVX_DIR/sap-xsac-di-*.zip -e $DEVX_DIR/sap-xsac-di-*.mtaext -o \
+	#ALLOW_SC_SAME_VERSION; then exit 1; fi;\
+	#echo "DI Installation completed ...  ********************"
 	
-	echo "WEBIDE Installation starts ...  ********************"
-	if ! xs install $DEVX_DIR/sap-xsac-webide-*.zip -e $DEVX_DIR/sap-xsac-webide-*.mtaext -o \
+	echo "WEBIDE and di Installation starts ...  ********************"
+	if ! xs install $DEVX_DIR/sap-xsac-devx-*.zip -e $DEVX_DIR/sap-xsac-devx-*.mtaext -o \
 	ALLOW_SC_SAME_VERSION; then exit 1; fi;\
-	echo "WEBIDE Installation completed ...  ********************"
+	echo "WEBIDE and di Installation completed ...  ********************"
 
 echo "Installing DEVX Components completed successfully"
 
