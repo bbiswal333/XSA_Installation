@@ -1,6 +1,13 @@
-#!/bin/bash
 
 #Components Path Constants
+
+DIR1="Disk1"
+DIR2="installer"
+DIR3="XSA"
+DIR4="HANA"
+DIR5="DEVX"
+DIR6="RT"
+DIR7="CONT"
 
 ROOT_DIR="/Disk1/installer"
 XSA_DIR="$ROOT_DIR/XSA"
@@ -10,20 +17,20 @@ XSA_RT_DIR="$ROOT_DIR/XSA/RT"
 XSA_CONT_DIR="$ROOT_DIR/XSA/CONT"
 
 #XSA RUNTIME URL generation
-echo "enter xsa_version"
-read XSA_RUNTIME
+#echo "enter xsa_version"
+#read XSA_RUNTIME
 xsa_rt_url="http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.releases.xmake/com/sap/xs/onpremise/runtime/xs.onpremise.runtime.client_linuxx86_64/"$XSA_RUNTIME
 
 
 #XSA ADMIN URL GENERATION
-echo "enter xsa_admin"
-read XSA_ADMIN
+#echo "enter xsa_admin"
+#read XSA_ADMIN
 admin_url="http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.milestones.xmake/com/sap/xsa/admin/sap-xsac-admin/"$XSA_ADMIN
 
 
 #XSA JOB SCHEDULER URL GENERATION
-echo "enter JOB SCHEDULER"
-read XSA_JOB_SCHEDULER
+#echo "enter JOB SCHEDULER"
+#read XSA_JOB_SCHEDULER
 scheduler_url="http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.milestones.xmake/com/sap/xs/jobscheduler/jobscheduler-assembly/"$XSA_JOB_SCHEDULER
 
 
@@ -33,48 +40,61 @@ scheduler_url="http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.
 #shine_url="http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.milestones.xmake/com/sap/xs/jobscheduler/jobscheduler-assembly/"$XSA_SHINE
 
 #XSA HRTT URL GENERATION
-echo "enter HRTT"
-read HRTT
+#echo "enter HRTT"
+#read HRTT
 hrtt_url="http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.milestones/com/sap/xsa/hrtt/sap-xsac-hrtt/"$HRTT
 
 #XSA DI URL GENERATION
-echo "enter DI"
-read DI
-di_url="http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.milestones/com/sap/di/sap-xsac-di/"$DI
+#echo "enter DI"
+#read DI
+#di_url="http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.milestones/com/sap/di/sap-xsac-di/"$DI
 
 #XSA WEBIDE URL GENERATION
-echo "enter DI"
-read WEB_IDE
-webide_url="http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.milestones/com/sap/devx/sap-xsac-webide/"$WEB_IDE
+#echo "enter DI"
+#read WEB_IDE
+webide_di_url="http://nexus.wdf.sap.corp:8081/nexus/content/groups/build.milestones/com/sap/devx/sap-xsac-devx/"$WEBIDE_DI
 
-[ -d $ROOT_DIR ] || sudo mkdir $ROOT_DIR
+cd /
+#sudo -i
+#chmod 777 root
 
-[ -d $XSA_DIR ] || sudo mkdir $XSA_DIR
+[ -d $DIR1 ] || mkdir $DIR1
 
-[ -d $HANA_DIR ] || sudo mkdir $HANA_DIR
+cd /$DIR1
 
-[ -d $DEVX_DIR ] || sudo mkdir $DEVX_DIR
+[ -d $DIR2 ] ||  mkdir $DIR2
 
-[ -d $XSA_RT_DIR ] || sudo mkdir $XSA_RT_DIR
+cd $ROOT_DIR
 
-[ -d $XSA_CONT_DIR ] || sudo mkdir $XSA_CONT_DIR
+[ -d $DIR3 ] ||  mkdir $DIR3
+
+[ -d $DIR4 ] ||  mkdir $DIR4
+
+[ -d $DIR5 ] ||  mkdir $DIR5
+
+cd $XSA_DIR
+
+[ -d $DIR6 ] ||  mkdir $DIR6
+
+[ -d $DIR7 ] ||  mkdir $DIR7
 
 
 cd $XSA_DIR
-wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --no-parent --no-proxy -A zip $xsa_rt_url
+wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --no-parent --no-proxy $xsa_rt_url/xs.onpremise.runtime.client_linuxx86_64-$XSA_RUNTIME.zip
 
 cd $XSA_CONT_DIR
 wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --no-parent --no-proxy -A zip $admin_url
-wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --no-parent --no-proxy -A zip $scheduler_url
+wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --no-parent --no-proxy $scheduler_url/jobscheduler-assembly-$XSA_JOB_SCHEDULER.zip
 
 cd $DEVX_DIR
-wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --no-parent --no-proxy -A zip $hrtt_url
-wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --no-parent --no-proxy -A zip $di_url
-wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --no-parent --no-proxy -A mtaext $di_url
-wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --no-parent --no-proxy -A zip $webide_url
-wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --no-parent --no-proxy -A mtaext $webide_url
+wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --no-parent --no-proxy  $hrtt_url/sap-xsac-hrtt-$HRTT.zip
+#wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --no-parent --no-proxy  $di_url/sap-xsac-di-$DI.zip
+#wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --no-parent --no-proxy  $di_url/sap-xsac-di-$DI.mtaext
+wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --no-parent --no-proxy  $webide_di_url/sap-xsac-devx-$WEBIDE_DI.zip
+wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --no-parent --no-proxy  $webide_di_url/sap-xsac-devx-$WEBIDE_DI.mtaext
 
 
 
 #wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --no-parent --no-proxy -A zip http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.releases.xmake/com/sap/xs/onpremise/runtime/xs.onpremise.runtime.hanainstallation_linuxx86_64/1.0.36
 
+$ROOT_DIR/XSA_INSTALL.sh
