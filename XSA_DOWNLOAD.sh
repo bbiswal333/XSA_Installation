@@ -54,6 +54,10 @@ hrtt_url="http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.miles
 #read WEB_IDE
 webide_di_url="http://nexus.wdf.sap.corp:8081/nexus/content/groups/build.milestones/com/sap/devx/sap-xsac-devx/"$WEBIDE_DI
 
+#HANA URL GENERATION
+hana_url="/net/sapmnt.production.makeresults.newdb_archive/HANA_WS_COR/released_weekstones/$HANA/server/linuxx86_64"
+
+
 cd /
 #sudo -i
 #chmod 777 root
@@ -79,7 +83,7 @@ cd $XSA_DIR
 [ -d $DIR7 ] ||  mkdir $DIR7
 
 
-cd $XSA_DIR
+cd $XSA_RT_DIR
 wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --no-parent --no-proxy $xsa_rt_url/xs.onpremise.runtime.client_linuxx86_64-$XSA_RUNTIME.zip
 
 cd $XSA_CONT_DIR
@@ -96,5 +100,13 @@ wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --n
 
 
 #wget -nH --cut-dirs=100 --no-check-certificate --auth-no-challenge -c -r -l1 --no-parent --no-proxy -A zip http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.releases.xmake/com/sap/xs/onpremise/runtime/xs.onpremise.runtime.hanainstallation_linuxx86_64/1.0.36
+
+
+
+for hanafile in "$hana_url"/*.SAR
+do
+  echo "$hanafile"
+  cp $hanafile $HANA_DIR
+done
 
 $ROOT_DIR/XSA_INSTALL.sh
