@@ -46,12 +46,12 @@ if [ ! "${sapcar}" ]; then exit 1; fi; \
 #chmod 7777 $sapcar; \
 echo $sapcar;
 
-echo "XSA RT Extarcting started.. ****************************************"
+#echo "XSA RT Extarcting started.. ****************************************"
 
-if ! $sapcar -xf $XSA_DIR/xs.onpremise.runtime.hanainstallation*.SAR  -R $XSA_RT_DIR; then \
-exit 1;fi; \
+#if ! $sapcar -xf $XSA_DIR/xs.onpremise.runtime.hanainstallation*.SAR  -R $XSA_RT_DIR; then \
+#exit 1;fi; \
 
-echo "XSA RT Extarcting Completed.. ************************************************"
+#echo "XSA RT Extarcting Completed.. ************************************************"
 
 echo "HANA server Extarcting started..  ***********************************************"
 
