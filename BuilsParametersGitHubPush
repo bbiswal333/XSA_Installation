@@ -1,0 +1,55 @@
+#GETTING HANA FILE
+
+hana_url="/net/sapmnt.production.makeresults.newdb_archive/HANA_WS_COR/released_weekstones/$HANA/server/linuxx86_64"
+for hanafile in "$hana_url"/*.SAR
+do
+  hana_file_path="$hanafile"
+done
+ 
+hana_name=$( echo $hana_file_path |cut -d'/' -f9 )
+
+
+#CONTENT TO UPDATE IN TRIGGER.TXT
+
+TRIGGER_XSA="sapcar;installer;http://nexus.wdf.sap.corp:8081/nexus/content/groups/build.milestones/com/sap/tools/sapcar/linuxx86_64/opt/sapcar/721.712.712;sapcar-721.712.712.bin \n\
+lcm;upload;//production.wdf.sap.corp/makeresults/newdb/POOL/HANA_WS_COR/released_weekstones/$HANA/lcm/linuxx86_64;SAP_HANA_LCM \n\
+hanadb;upload;//production.wdf.sap.corp/makeresults/newdb/POOL/HANA_WS_COR/released_weekstones/$HANA/server/linuxx86_64;$hana_name \n\
+xsrt;installer/RT;http://nexus.wdf.sap.corp:8081/nexus/service/local/repositories/build.milestones.xmake/content/com/sap/xs/onpremise/runtime/xs.onpremise.runtime.hanainstallation_linuxx86_64/$XSA_RUNTIME;xs.onpremise.runtime.hanainstallation_linuxx86_$XSA_RUNTIME.SAR \n\
+jobsched;installer/XSA;http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.milestones.xmake/com/sap/xs/jobscheduler/jobscheduler-assembly/$XSA_JOB_SCHEDULER;jobscheduler-assembly-$XSA_JOB_SCHEDULER-XSACSERVICES03_2.zip \n\
+admin;installer/XSA;http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.milestones.xmake/com/sap/xsa/admin/sap-xsac-admin/$XSA_ADMIN;sap-xsac-admin-$XSA_ADMIN-XSACMONITORING03_0.zip \n\
+hrtt;installer/XSA;http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.milestones/com/sap/xsa/hrtt/sap-xsac-hrtt/$HRTT;sap-xsac-hrtt-$HRTT-XSACHRTT1647_0.zip \n\
+di;installer/XSA;http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.milestones/com/sap/di/sap-xsac-di/$DI;sap-xsac-di-$DI-XSACDICORE13_0.zip \n\
+di;installer/XSA;http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.milestones/com/sap/di/sap-xsac-di/$DI;sap-xsac-di-$DI.mtaext \n\
+webide;installer/XSA;http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.milestones/com/sap/devx/sap-xsac-webide/$WEBIDE;sap-xsac-webide-$WEBIDE-XSACSAPWEBIDE13_0.zip \n\
+webide;installer/XSA;http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.milestones/com/sap/devx/sap-xsac-webide/$WEBIDE;sap-xsac-webide-$WEBIDE.mtaext"
+
+
+echo $TRIGGER_XSA
+
+#PUSHING UPDATED TRIGGER.TXT IN GITHUB
+
+cd /tmp
+
+if [ -d hanaxsa ]; then
+sudo rm -rf hanaxsa
+mkdir hanaxsa
+fi
+
+cd hanaxsa
+git init /tmp/hanaxsa
+
+git clone https://gitHubTagger:Abcd1234@github.wdf.sap.corp/gitHubTagger/Docker.git 
+
+cd Docker
+
+
+echo $TRIGGER_XSA > /tmp/hanaxsa/Docker/Redhat/build/Hana-XSA/hana-xsa/jenkins/trigger-xsa.txt
+
+ git status
+ git add .
+ git status
+ git commit -m "Updated trigger.txt"
+ git status
+
+git push
+
